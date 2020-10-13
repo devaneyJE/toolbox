@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+tmux new-session -d -scyber -naccess
+
+tmux neww -ntask
+tmux split-window -v
+
+tmux neww -dnscanning
+
+tmux neww -dnwriteup
+
+tmux neww -dnhelp
+
+tmux neww -dnvpn
+
+tmux neww -dnmisc
+
+tmux select-window -t 0
+
+tmux attach -dtcyber
