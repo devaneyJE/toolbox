@@ -1,12 +1,12 @@
 #!/bin/bash
 
 
-tmux new-session -d -scyber -naccess
+tmux new-session -d -scyber -nscanning
 
-tmux neww -ntask
+tmux neww -nmain
 tmux split-window -v
 
-tmux neww -dnscanning
+tmux neww -dnsecondary
 
 tmux neww -dnwriteup
 
