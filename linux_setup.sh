@@ -53,6 +53,7 @@ fi
 
 ## copying vimrc
 if [ -d $homedir/repos/devaneyJE/dotfiles ]; then
+	git clone https://github.com/VundleVim/Vundle.vim.git $homedir/.vim/bundle/Vundle.vim
 	cp $homedir/dotfiles/vimrc $homedir/.vimrc
 	vim +PluginInstall +qall
 else
