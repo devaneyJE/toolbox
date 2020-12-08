@@ -25,6 +25,7 @@ fi
 #setting vars if tests passed
 homedir=/home/$2
 todo=$homedir/.setup_todo.txt
+echo "Manual Setup ToDo List:" >> $todo
 
 # installing software/acquiring repos
 if ! [ -x "$(command -v vim)" ]; then
@@ -70,7 +71,7 @@ echo -e "export VISUAL=vim\nexport EDITOR=$VISUAL" >> $homedir/.bashrc
 echo " " >> $homedir/.bashrc
 
 ## path edit
-echo "# adding dirs to path" >> $homedir/.bashrc
+echo "## adding dirs to path" >> $homedir/.bashrc
 
 if [ -d $homedir/scripts ]; then
 	echo 'export PATH="$HOME/scripts:$PATH"' >> $homedir/.bashrc
@@ -89,9 +90,9 @@ fi
 echo " " >> $homedir/.bashrc
 
 ## aliases
-echo "# aliases" >> $homedir/.bashrc 
+echo "## aliases" >> $homedir/.bashrc 
 echo "alias vibashrc='vim $homedir/.bashrc'" >> $homedir/.bashrc
-echo 'alias sudos=sudo env PATH=$PATH' >> $homedir/.bashrc
+echo 'alias sudos='sudo env PATH=$PATH'' >> $homedir/.bashrc
 echo " " >> $homedir/.bashrc
 
 # create manual todo list
