@@ -1,14 +1,14 @@
 #! /bin/bash
 
 # conditions to start running setup
-if [ $# -eq 0 ] 
-then
-	echo "Missing options! Use -h for help."
-	exit 1
-fi
+#if [ $# -eq 0 ] 
+#then
+#	echo "Missing options! Use -h for help."
+#	exit 1
+#fi
 
-if [ $1 == "-h" ]; then
-	echo -e "Syntax:\nlinux_setup.sh -u <user> <ssh-option>"
+if [ $# == 1 ] && [ $1 == "-h" ]; then
+	echo -e "Syntax:\n./linux_setup.sh"
 	exit 1
 fi
 
@@ -17,48 +17,49 @@ if ! [ $(id -u) = 0 ]; then
 	exit 1
 fi
 
-if [ $1 == "-u" && ! -d /home/$2 ]; then
+if [ ! -d /home/$SUDO_USER ]; then
 	echo "User does not exist or have necessary home directory."
 	exit 1
 fi
 
 #setting vars if tests passed
-homedir=/home/$2
+su=$SUDO_USER
+homedir=/home/$su
 todo=$homedir/.setup_todo.txt
-echo "Manual Setup ToDo List:" >> $todo
+echo -e "Manual Setup ToDo List:\n" >> $todo
+chown $su:$su $todo
 
 # installing software/acquiring repos
 if ! [ -x "$(command -v vim)" ]; then
-	apt-get update
-	apt-get install vim -y
+	apt-get update -qq
+	apt-get install -qq vim -y
 fi
 if ! [ -x "$(command -v git)" ]; then
-	apt-get update
-	apt-get install git -y
+	apt-get update -qq
+	apt-get install -qq git -y
 fi
+echo -e "--------------------\n -\n  -\n   -\n    -\n     -\nSoftware installed!\n     -\n    -\n   -\n  -\n -\n--------------------"
 
 ## making repos dir and cloning dirs
-mkdir -p $homedir/{wlist,repos/seclists}
-git clone --depth 1 https://github.com/danielmiessler/SecLists.git $homedir/repos/seclists
+mkdir -p $homedir/{wlist,repos/{seclists,devaneyJE}}
+git clone --quiet --depth 1 https://github.com/danielmiessler/SecLists.git $homedir/repos/seclists >/dev/null
 mv $homedir/repos/seclists/{Discovery/Web-Content/{big.txt,directory-list-2.3-medium.txt},Passwords/Leaked-Databases/rockyou.txt.tar.gz,Fuzzing/SQLi/quick-SQLi.txt} $homedir/wlist/
 tar -zxf $homedir/wlist/rockyou.txt.tar.gz -C $homedir/wlist/ && rm $homedir/wlist/rockyou.txt.tar.gz
-
-if [ $3 == "-ssh" ]; then
-	mkdir -p $homedir/repos/devaneyJE/{dotfiles,toolbox}
-	git clone git@github.com:devaneyJE/dotfiles.git $homedir/repos/devaneyJE/dotfiles
-	git clone git@github.com:devaneyJE/toolbox.git $homedir/repos/devaneyJE/toolbox
-else
-	echo "create and add ssh keys" >> $todo
-fi
+cp -r /media/sf_VMShare/{dotfiles,toolbox} $homedir/repos/devaneyJE/
+echo "- create and add ssh keys" >> $todo
+chown -R $su:$su $homedir/{wlist,repos}
+echo -e "--------------------\n -\n  -\n   -\n    -\n     -\nRepositories created!\n     -\n    -\n   -\n  -\n -\n--------------------"
 
 ## copying vimrc
 if [ -d $homedir/repos/devaneyJE/dotfiles ]; then
-	git clone https://github.com/VundleVim/Vundle.vim.git $homedir/.vim/bundle/Vundle.vim
-	cp $homedir/dotfiles/vimrc $homedir/.vimrc
+	git clone --quiet https://github.com/VundleVim/Vundle.vim.git $homedir/.vim/bundle/Vundle.vim >/dev/null
+	chown $su:$su $homedir/.vim
+	cp $homedir/repos/devaneyJE/dotfiles/vimrc $homedir/.vimrc
 	vim +PluginInstall +qall
 else
 	echo -e "set nu\nset rnu\nset colo elflord" > $homedir/.vimrc	
-fi
+fi 
+echo -e "--------------------\n -\n  -\n   -\n    -\n     -\n$su .vimrc configured!\n     -\n    -\n   -\n  -\n -\n--------------------"
 
 # adding to bashrc
 echo " " >> $homedir/.bashrc
@@ -68,7 +69,8 @@ echo " " >> $homedir/.bashrc
 ## general
 echo "# user mods below" >> $homedir/.bashrc
 echo "cat $todo" >> $homedir/.bashrc
-echo -e "export VISUAL=vim\nexport EDITOR=$VISUAL" >> $homedir/.bashrc
+echo 'export VISUAL=vim' >> $homedir/.bashrc
+echo 'export EDITOR=$VISUAL' >> $homedir/.bashrc
 echo " " >> $homedir/.bashrc
 
 ## path edit
@@ -78,6 +80,7 @@ if [ -d $homedir/scripts ]; then
 	echo 'export PATH="$HOME/scripts:$PATH"' >> $homedir/.bashrc
 else
 	mkdir $homedir/scripts
+	chown $su:$su $homedir/scripts
 	echo 'export PATH="$HOME/scripts:$PATH"' >> $homedir/.bashrc
 fi	
 
@@ -91,13 +94,15 @@ fi
 echo " " >> $homedir/.bashrc
 
 ## aliases
-echo "## aliases" >> $homedir/.bashrc 
+echo "## user aliases" >> $homedir/.bashrc 
 echo "alias vibashrc='vim $homedir/.bashrc'" >> $homedir/.bashrc
 echo 'alias sudos='sudo env PATH=$PATH'' >> $homedir/.bashrc
 echo " " >> $homedir/.bashrc
+echo -e "--------------------\n -\n  -\n   -\n    -\n     -\n$su .bashrc configured!\n     -\n    -\n   -\n  -\n -\n--------------------"
 
 # create manual todo list
-echo "add `'admin-user' ALL=(ALL) NOPASSWD: ALL` to sudoers file" >> $todo
-echo "change terminal color settings" >> $todo
-echo "remove todo list reference from .bashrc" >> $todo
-
+echo "- add '$su ALL=(ALL) NOPASSWD: ALL' to sudoers file" >> $todo
+echo "- change terminal color settings" >> $todo
+echo "- remove todo list reference from .bashrc" >> $todo
+echo -e "--------------------\n -\n  -\n   -\n    -\n     -\nToDo List created!\n     -\n    -\n   -\n  -\n -\n--------------------"
+cat $todo
