@@ -22,6 +22,8 @@ if [ ! -d /home/$SUDO_USER ]; then
 	exit 1
 fi
 
+echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\nStarting Setup!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
+
 #setting vars if tests passed
 su=$SUDO_USER
 homedir=/home/$su
@@ -38,7 +40,7 @@ if ! [ -x "$(command -v git)" ]; then
 	apt-get update -qq
 	apt-get install -qq git -y
 fi
-echo -e "--------------------\n -\n  -\n   -\n    -\n     -\nSoftware installed!\n     -\n    -\n   -\n  -\n -\n--------------------"
+echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\nSoftware installed!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
 
 ## making repos dir and cloning dirs
 mkdir -p $homedir/{wlist,repos/{seclists,devaneyJE}}
@@ -48,7 +50,7 @@ tar -zxf $homedir/wlist/rockyou.txt.tar.gz -C $homedir/wlist/ && rm $homedir/wli
 cp -r /media/sf_VMShare/{dotfiles,toolbox} $homedir/repos/devaneyJE/
 echo "- create and add ssh keys" >> $todo
 chown -R $su:$su $homedir/{wlist,repos}
-echo -e "--------------------\n -\n  -\n   -\n    -\n     -\nRepositories created!\n     -\n    -\n   -\n  -\n -\n--------------------"
+echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\nRepositories created!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
 
 ## copying vimrc
 if [ -d $homedir/repos/devaneyJE/dotfiles ]; then
@@ -59,7 +61,7 @@ if [ -d $homedir/repos/devaneyJE/dotfiles ]; then
 else
 	echo -e "set nu\nset rnu\nset colo elflord" > $homedir/.vimrc	
 fi 
-echo -e "--------------------\n -\n  -\n   -\n    -\n     -\n$su .vimrc configured!\n     -\n    -\n   -\n  -\n -\n--------------------"
+echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\n$su .vimrc configured!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
 
 # adding to bashrc
 echo " " >> $homedir/.bashrc
@@ -98,11 +100,11 @@ echo "## user aliases" >> $homedir/.bashrc
 echo "alias vibashrc='vim $homedir/.bashrc'" >> $homedir/.bashrc
 echo 'alias sudos='sudo env PATH=$PATH'' >> $homedir/.bashrc
 echo " " >> $homedir/.bashrc
-echo -e "--------------------\n -\n  -\n   -\n    -\n     -\n$su .bashrc configured!\n     -\n    -\n   -\n  -\n -\n--------------------"
+echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\n$su .bashrc configured!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
 
 # create manual todo list
 echo "- add '$su ALL=(ALL) NOPASSWD: ALL' to sudoers file" >> $todo
 echo "- change terminal color settings" >> $todo
 echo "- remove todo list reference from .bashrc" >> $todo
-echo -e "--------------------\n -\n  -\n   -\n    -\n     -\nToDo List created!\n     -\n    -\n   -\n  -\n -\n--------------------"
+echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\nToDo List created!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
 cat $todo
