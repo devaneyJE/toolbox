@@ -25,7 +25,7 @@ homedir=/home/$su
 todo=$homedir/.setup_todo.txt
 
 # installing packages/acquiring repos
-apt-get update -qq && apt-get install -qq vim git -y
+apt-get update -qq && apt-get install -q vim git -y
 
 echo -e "\n     -\n    -\n   -\n  -\n -\n--------------------\nPackages installed!\n--------------------\n -\n  -\n   -\n    -\n     -\n"
 
