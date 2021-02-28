@@ -17,6 +17,7 @@ pacman -S git \
 			fish \
 			kitty \
 			alacritty \
+			neofetch \
 			tmux \
 			arch-wiki-cli \
 			ranger \
