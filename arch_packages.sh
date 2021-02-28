@@ -2,13 +2,29 @@
 
 pacman -S git \
 			base-devel \
+			gparted \
+			wget \
+			netctl \
+			net-tools \
+			nmap \
+			ufw \
+			wireless_tools \
+			wpa_supplicant \
+			openssh \
+			samba \
 			bspwm \
 			sxhkd \
 			kitty \
 			alacritty \
 			tmux \
+			arch-wiki-cli \
+			ranger \
+			pcmanfm \
 			vim \
 			emacs \
+			mariadb \
+			sqlite \
+			redis \
 			go \
 			go-tools \
 			php \
@@ -23,21 +39,17 @@ pacman -S git \
 			vlc \
 			qt5 \
 			phonon-qt5-vlc \
-			mariadb \
-			sqlite \
-			redis \
-			openssh \
-			samba \
-			dmenu \
-			rofi \
-			wget \
-			netctl \
-			wireless_tools \
-			wpa_supplicant \
 			bluez \
 			bluez-utils \
 			pulseaudio-bluetooth \
-			efibootmgr \
+			dmenu \
+			rofi \
+			scrot \
+			virtualbox \
 			firefox \
 			firefox-i18n-en-us
 
+#			efibootmgr 
+#			dosfstools
+#			os-prober
+#			mtools
