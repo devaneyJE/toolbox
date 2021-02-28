@@ -14,6 +14,7 @@ pacman -S git \
 			samba \
 			bspwm \
 			sxhkd \
+			fish \
 			kitty \
 			alacritty \
 			tmux \
@@ -49,7 +50,10 @@ pacman -S git \
 			firefox \
 			firefox-i18n-en-us
 
+#			grub
 #			efibootmgr 
 #			dosfstools
 #			os-prober
 #			mtools
+#			networkmanager
+#			
