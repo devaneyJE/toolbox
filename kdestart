@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "Change behavior of sddm on boot..."
+
+echo -n "enable / disable: "
+read -r
+choice=$REPLY
+
+case "$choice" in
+	'enable')
+		sudo systemctl enable sddm.service && reboot
+	;;
+    'disable')
+		sudo systemctl disable sddm.service
+		echo "System will start in tty."
+	;;
+	*)
+		echo "Invalid option detected."
+	;;
+esac

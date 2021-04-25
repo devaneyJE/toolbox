@@ -5,28 +5,28 @@ sudo umount /dev/mmcblk0p2
 
 echo -e "o\nw" | sudo fdisk /dev/mmcblk0
 
-sudo rm /home/jonah/arch -r
+sudo rm $HOME/arch -r
 
-mkdir /home/jonah/arch
-mkdir /home/jonah/arch/boot
-mkdir /home/jonah/arch/root
+mkdir $HOME/arch
+mkdir $HOME/arch/boot
+mkdir $HOME/arch/root
 
 echo -e "n\np\n1\n\n+100M\nt\nc\nn\np\n2\n\n\nw" | sudo fdisk /dev/mmcblk0
 
 sudo mkfs.vfat /dev/mmcblk0p1
 echo "y" | sudo mkfs.ext4 /dev/mmcblk0p2
 
-sudo mount /dev/mmcblk0p1 /home/jonah/arch/boot
-sudo mount /dev/mmcblk0p2 /home/jonah/arch/root
+sudo mount /dev/mmcblk0p1 $HOME/arch/boot
+sudo mount /dev/mmcblk0p2 $HOME/arch/root
 
 sudo su <<HERE
-tar zxvf /home/jonah/Files/linux/arch/ArchLinuxARM-rpi-4-latest.tar.gz -C /home/jonah/arch/root
+tar zxvf $HOME/Files/linux/arch/ArchLinuxARM-rpi-4-latest.tar.gz -C $HOME/arch/root
 
-mv /home/jonah/arch/root/boot/* /home/jonah/arch/boot
+mv $HOME/arch/root/boot/* $HOME/arch/boot
 
 sync
 
-umount /home/jonah/arch/boot
-umount /home/jonah/arch/root
+umount $HOME/arch/boot
+umount $HOME/arch/root
 HERE
 

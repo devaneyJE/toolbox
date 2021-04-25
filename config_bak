@@ -1,0 +1,15 @@
+#!/bin/bash
+
+config_dirs=( "bash" "bspwm" "cherrytree" "dmenu" "feh" "fish" "kitty" "neofetch" "nvim" "polybar" "shell" "spotifyd" "sxhkd" "vim" "xorg" "zsh" )
+
+conf_dir=$HOME/.config
+bak_dir=$HOME/.bak/manjaro_backup/config/
+
+for i in "${config_dirs[@]}"; do
+	cp -r $conf_dir/$i $bak_dir
+	echo "$i"
+done
+
+echo "files in $bak_dir ..."
+ls $bak_dir
+
