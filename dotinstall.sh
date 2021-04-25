@@ -14,7 +14,7 @@ config_dirs=( "bspwm" "dmenu" "feh" "fish" "kitty" "neofetch" "nvim" "polybar" "
 if [ -d $HOME/.bak/ ]; then
 	echo -e "Backup directory present. \n"
 else
-	mkdir -p $HOME/.bak/
+	mkdir -p $HOME/.bak/home_config
 	echo -e "Backup directory created. \n"
 fi
 bak_dir=$HOME/.bak
@@ -39,12 +39,12 @@ dot_dir=$HOME/repos/dotfiles
 # backup
 for i in "${config_dirs[@]}"; do
 	if [ -d $bak_dir/home_config/$i ]; then
-		cp -r $home_config_dir/$i/* $bak_dir/home_config/$i/
+		cp -r $home_config_dir/$i/ $bak_dir/home_config/
 		echo -e "$i"
 		echo ' '
 	else
 		mkdir -p $bak_dir/home_config/$i
-		cp -r $home_config_dir/$i/* $bak_dir/home_config/$i/
+		cp -r $home_config_dir/$i/ $bak_dir/home_config/
 		echo -e "$i"
 		echo ' '
 	fi
@@ -54,7 +54,7 @@ done
 echo "Installing dotfiles:"
 for i in "${config_dirs[@]}"; do
 	if [ -d $home_config_dir/$i/ ]; then
-		cp -r $dot_dir/.config/$i/ $home_config_dir/$i/
+		cp -r $dot_dir/.config/$i/ $home_config_dir/
 		echo "$i"
 		echo ' '
 	elif [ ! -d $home_config_dir/$i/ ]; then
