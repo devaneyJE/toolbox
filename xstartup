@@ -14,15 +14,13 @@ case "$choice" in
 		if [ "$DIFFB" != "" ]; then
 			cp $XDIR/.xinitrc $XDIR/.xinitrc.bak && cp $XDIR/.xinitrc_bspwm $XDIR/.xinitrc
 		fi
-		echo "can now launch bspwm with startx"
-		#startx
+		echo -e " \nLaunch BSPWM with startx\n "
 	;;
 	'2')
 		if [ "$DIFFG" != "" ]; then
 			cp $XDIR/.xinitrc $XDIR/.xinitrc.bak && cp $XDIR/.xinitrc_gnome $XDIR/.xinitrc
 		fi
-		echo "can now launch gnome with startx"
-		#startx
+		echo -e " \nLaunch Gnome with startx\n "
 	;;
 	'*')
 		echo "Invalid option. Indicate choice with number for display option."
